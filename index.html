@@ -3,58 +3,65 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/src/css/styles.css" />
     <title>labScore</title>
   </head>
   <body>
     <div class="modal-container shadowed p-4">
-      <header class="col-auto d-flex mb-4">
-        <section id="header-student-info" class="row">
-          <h2>Informações do Aluno</h2>
-          <div id="student_info_name" class="me-4 mb-2">
-            <label for="student_name" class="fw-bold me-2"> Nome: </label>
-            <span id="student_name"> João da Silva </span>
+      <header class="mb-4">        
+        <section id="header-student-info" class="col-auto">
+          <div class="d-flex justify-content-between pb-3">
+            <h2>Informações do Aluno</h2>
+            <button type="button" class="btn button_dark_rounded" data-toggle="modal" data-target="#registerModal">Cadastrar Aluno</button>
           </div>
-          <div id="student_info_age" class="me-4 mb-2">
-            <label for="student_age" class="fw-bold me-2"> Idade: </label>
-            <span id="student_age"> 16 anos </span>
-          </div>
-          <div id="student_info_class" class="me-4 mb-2">
-            <label for="student_class" class="fw-bold me-2"> Série: </label>
-            <span id="student_class"> 2º Ano do Ensino Médio </span>
-          </div>
-          <div id="student_info_school" class="me-4 mb-2">
-            <label for="student_school" class="fw-bold me-2"> Escola: </label>
-            <span id="student_school"> Escola Estadual Professor José </span>
-          </div>
-          <div id="student_info_favorite_discipline" class="me-4 mb-2">
-            <label for="student_favorite_discipline" class="fw-bold me-2"> Matéria Favorita: </label>
-            <span id="student_favorite_discipline"> Matemática </span>
-          </div>
+          <section id="div_student_data">
+            <div id="student_info_name" class="me-4 mb-2">
+              <label for="student_name" class="fw-bold me-2"> Nome: </label>
+              <input type="text" class="data_display" id="student_name" disabled readonly> 
+            </div>
+            <div id="student_info_age" class="me-4 mb-2">
+              <label for="student_age" class="fw-bold me-2"> Idade: </label>
+              <input type="text" id="student_age" disabled readonly />
+            </div>
+            <div id="student_info_class" class="me-4 mb-2">
+              <label for="student_class" class="fw-bold me-2"> Série: </label>
+              <input type="text" id="student_class" disabled readonly />
+            </div>
+            <div id="student_info_school" class="me-4 mb-2">
+              <label for="student_school" class="fw-bold me-2"> Escola: </label>
+              <input type="text" id="student_school" disabled readonly />
+            </div>
+            <div id="student_info_favorite_discipline" class="me-4 mb-2">
+              <label for="student_favorite_discipline" class="fw-bold me-2"> Matéria Favorita: </label>
+              <input type="text" id="student_favorite_discipline" disabled readonly />
+            </div>
+          </section>
         </section>
       </header>
       <main>
+        <!-- Modal de Cadastro -->
+        <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <!-- Modal de cadastro inserida via studentInsertModal -->
+          </div>
+        </div>
+
         <section id="student_disciplines">
           <div class="col-auto d-flex justify-content-between pb-3">
             <h2>Notas das Materias</h2>
-            <input type="button" value="Adicionar Linha" id="btn_add_discipline_row" class="button_dark_rounded" />
+            <input type="button" value="Adicionar Linha" id="btn_add_discipline_row" class="btn button_dark_rounded" />
           </div>
           <div class="pb-4">
             <table class="table table-bordered text-center">
               <thead class="shadowed">
-                <tr class="aligin">
+                <tr class="align">
                   <th scope="col">Matéria</th>
                   <th scope="col">Nota 1</th>
                   <th scope="col">Nota 2</th>
                   <th scope="col">Nota 3</th>
                   <th scope="col">Nota 4</th>
-                  <th scope="col">Media</th>
+                  <th scope="col">Média</th>
                 </tr>
               </thead>
               <tbody id="disciplines_table_body">
@@ -101,5 +108,28 @@
       <span>Powered by LabScore.</span>
     </footer>
     <script type="module" src="./src/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+     <script>
+      // Validação customizada do Bootstrap
+      (function () {
+        "use strict";
+        var forms = document.querySelectorAll(".needs-validation");
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    </script>
   </body>
 </html>

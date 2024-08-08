@@ -1,0 +1,63 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title" id="registerModalLabel">Cadastro de Aluno</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form id="add_student_form" class="needs-validation justify-content-between" novalidate>
+      <div class="mb-3">
+        <label for="inputName" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="inputName" required />
+        <div class="invalid-feedback">Por favor, insira o nome do aluno.</div>
+      </div>
+      <div class="mb-3">
+        <label for="inputAge" class="form-label">Idade</label>
+        <input type="number" class="form-control" id="inputAge" required />
+        <div class="invalid-feedback">Por favor, insira a idade do aluno.</div>
+      </div>
+      <div class="mb-3">
+        <label for="inputSeries" class="form-label">Série</label>
+        <input type="text" class="form-control" id="inputGrade" required />
+        <div class="invalid-feedback">Por favor, insira a série do aluno.</div>
+      </div>
+      <div class="mb-3">
+        <label for="inputSchool" class="form-label">Escola</label>
+        <input type="text" class="form-control" id="inputSchool" required />
+        <div class="invalid-feedback">Por favor, insira o nome da escola.</div>
+      </div>
+      <div class="mb-3">
+        <label for="inputFavoriteSubject" class="form-label">Matéria Favorita</label>
+        <input type="text" class="form-control" id="inputFavoriteDiscipline" required />
+        <div class="invalid-feedback">Por favor, insira a matéria favorita.</div>
+      </div>
+      <section id="address_section"> 
+        <div class="div_grid">
+          <div class="mb-3">
+            <label for="inputCEP" class="form-label">CEP</label>
+            <input type="text" class="form-control" id="inputCEP" required />
+            <div class="invalid-feedback">Por favor, insira o CEP.</div>
+          </div>
+          <div class="mb-3">
+            <label for="inputState" class="form-label">Estado</label>
+            <input type="text" class="form-control" id="inputState" disabled />
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="inputStreet" class="form-label">Rua</label>
+          <input type="text" class="form-control" id="inputStreet" disabled />
+        </div>
+        <div class="mb-3">
+          <label for="inputCity" class="form-label">Cidade</label>
+          <input type="text" class="form-control" id="inputCity" disabled />
+        </div>
+      
+      </section>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Salvar aluno</button>
+      </div>
+    </form>
+  </div>
+</div>
