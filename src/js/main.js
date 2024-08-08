@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .then((response) => response.text())
     .then((html) => {
       document.querySelector('#registerModal .modal-dialog').innerHTML = html;
+      addCEPListener(); // Adiciona o listener do CEP
       fetchStudentData();
       })
     .catch((error) => {
@@ -55,5 +56,32 @@ function fetchStudentData() {
     document.getElementById('student_school').value = studentSchool;
     document.getElementById('student_favorite_discipline').value = studentFavoriteDiscipline;
     $('#registerModal').modal('hide'); // Fecha o modal
+  });
+}
+
+
+function addCEPListener() {
+  const cepInput = document.getElementById('inputCEP');
+  
+  cepInput.addEventListener('blur', function () {
+    const cep = cepInput.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+
+    if (cep.length === 8) { // Verifica se o CEP tem 8 dígitos
+      fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.erro) {
+            alert('CEP não encontrado.');
+          } else {
+            document.getElementById('inputStreet').value = data.logradouro || '';
+            document.getElementById('inputCity').value = data.localidade || '';
+            document.getElementById('inputState').value = data.uf || '';
+          }
+        })
+        .catch(error => {
+          console.error('Erro ao buscar o CEP:', error);
+          alert('Erro ao buscar o CEP.');
+        });
+    }
   });
 }
