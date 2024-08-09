@@ -47,15 +47,26 @@ function fetchStudentData() {
     const studentAge = document.getElementById('inputAge').value;
     const studentGrade = document.getElementById('inputGrade').value;
     const studentSchool = document.getElementById('inputSchool').value;
+    const studentCEP = document.getElementById('inputCEP').value;
+    const studentStreet = document.getElementById('inputStreet').value;
+    const studentCity = document.getElementById('inputCity').value;
+    const studentState = document.getElementById('inputState').value;
     const studentFavoriteDiscipline = document.getElementById('inputFavoriteDiscipline').value;
 
-    // Atualiza a seção "header-student-info"
-    document.getElementById('student_name').value = studentNome;
-    document.getElementById('student_age').value = studentAge;
-    document.getElementById('student_class').value = studentGrade;
-    document.getElementById('student_school').value = studentSchool;
-    document.getElementById('student_favorite_discipline').value = studentFavoriteDiscipline;
+    const studentData = {
+      nome: studentNome,
+      idade: studentAge,
+      serie: studentGrade,
+      escola: studentSchool,
+      materiaFavorita: studentFavoriteDiscipline,
+      cep: studentCEP,
+      rua: studentStreet,
+      cidade: studentCity,
+      estado: studentState
+    };    
+    localStorage.setItem('studentData', JSON.stringify(studentData));
     $('#registerModal').modal('hide'); // Fecha o modal
+    loadStudentData();
   });
 }
 
@@ -84,4 +95,15 @@ function addCEPListener() {
         });
     }
   });
+}
+
+function loadStudentData() {  
+  const studentData = JSON.parse(localStorage.getItem('studentData'));
+  if (studentData) {
+    document.getElementById('student_name').value = studentData.nome || '';
+    document.getElementById('student_age').value = studentData.idade || '';
+    document.getElementById('student_class').value = studentData.serie || '';
+    document.getElementById('student_school').value = studentData.escola || '';
+    document.getElementById('student_favorite_discipline').value = studentData.materiaFavorita || '';
+  }
 }
