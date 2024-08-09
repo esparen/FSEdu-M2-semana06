@@ -1,6 +1,34 @@
 import { calculateAverage, evaluateAverage, addDisciplineRow, calculateAllAverages } from './utils.js';
 
+const studentGradesData = [
+  {
+    nome: "Quimica",
+    nota1: 8,
+    nota2: 7,
+    nota3: 9,
+    nota4: 10 
+  }, 
+  {
+    nome: "Matemática",
+    nota1: 9,
+    nota2: 8,
+    nota3: 8,
+    nota4: 9 
+  },
+    {
+    nome: "Português",
+    nota1: 6,
+    nota2: 7,
+    nota3: 7,
+    nota4: 8 
+  },
+]
+
+localStorage.setItem('studentGradesData', JSON.stringify(studentGradesData));
+
 document.addEventListener('DOMContentLoaded', function () {
+  loadPageData();
+
 
   fetch('studentInsertModal.html')
     .then((response) => response.text())
@@ -15,7 +43,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const allAverages = [];
   document.getElementById('btn_add_discipline_row').addEventListener('click', function () {
-    const discipline = prompt('Qual a matéria deseja cadastrar?');
+    getNewDisciplineData();
+
+    const average = calculateAverage(grades);
+    allAverages.push(average);
+    calculateAllAverages(allAverages);
+    addDisciplineRow(discipline, grades, average);
+    evaluateAverage(average);
+  });
+});
+
+function loadPageData() {
+  loadStudentData();
+  const studentGradesData = JSON.parse(localStorage.getItem('studentGradesData'));
+  if (studentGradesData) {
+    studentGradesData.forEach((discipline) => {
+      const grades = [discipline.nota1, discipline.nota2, discipline.nota3, discipline.nota4];
+      const average = calculateAverage(grades);
+      addDisciplineRow(discipline.nome, grades, average);
+    });
+  }
+};
+
+function getNewDisciplineData() {
+  const discipline = prompt('Qual a matéria deseja cadastrar?');
     const grades = [];
     let i = 0;
     while (i < 4) {
@@ -27,15 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
         alert('Por favor, informe um número válido entre 0 e 10.');
       }
     }
-
-    const average = calculateAverage(grades);
-    allAverages.push(average);
-    calculateAllAverages(allAverages);
-    addDisciplineRow(discipline, grades, average);
-    evaluateAverage(average);
-  });
-});
-
+  }
 
 function fetchStudentData() {
   const form = document.getElementById('add_student_form');
