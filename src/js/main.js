@@ -1,21 +1,64 @@
-import { calculateAverage, evaluateAverage, addDisciplineRow, calculateAllAverages } from './utils.js';
+import { 
+  getAverage, 
+  evaluateAverage, 
+  addDisciplineRow, 
+  cleanGradeTable, 
+  initStudentGradeData 
+} from './utils.js';
+
 
 document.addEventListener('DOMContentLoaded', function () {
+  initStudentGradeData(); //inicia JSON com notas e médias do aluno
+  loadPageData(); //preenche campos com dados do aluno e disciplinas
 
   fetch('studentInsertModal.html')
     .then((response) => response.text())
     .then((html) => {
       document.querySelector('#registerModal .modal-dialog').innerHTML = html;
-      addCEPListener(); // Adiciona o listener do CEP
+      addCEPListener(); 
       fetchStudentData();
       })
     .catch((error) => {
       console.error('Erro ao carregar o conteúdo do modal:', error);
     });
 
-  const allAverages = [];
   document.getElementById('btn_add_discipline_row').addEventListener('click', function () {
-    const discipline = prompt('Qual a matéria deseja cadastrar?');
+    const newDiscipline = getNewDisciplineData();
+    const studentGradesData = JSON.parse(localStorage.getItem('studentGradesData')) || [];
+    studentGradesData.push(newDiscipline);
+    localStorage.setItem('studentGradesData', JSON.stringify(studentGradesData));
+    loadPageData();
+  });
+});
+
+function loadPageData() {
+  loadStudentData(); //carrega dados do aluno
+  cleanGradeTable(); //limpa a tabela de disciplinas
+  loadGradeData(); //carrega dados das disciplinas e notas
+};
+
+function loadGradeData() {
+  const studentGradesData = JSON.parse(localStorage.getItem('studentGradesData'));
+  
+  if (studentGradesData) {
+    let sumOfAverages = 0;
+    let highestAverage = 0;
+    studentGradesData.forEach((discipline) => {
+      discipline.average = getAverage(discipline.grades);      
+      if (discipline.average > highestAverage) highestAverage = discipline.average;
+      sumOfAverages += discipline.average;
+      addDisciplineRow(discipline.discipline, discipline.grades, discipline.average);
+      evaluateAverage(discipline.average);
+    });
+    const generalAverage = sumOfAverages / studentGradesData.length;
+    document.querySelector('#general_average_result').textContent = `A média geral do aluno é ${generalAverage}`;
+    localStorage.setItem('studentGradesData', JSON.stringify(studentGradesData));    
+    document.getElementById('highest-average').textContent = `A maior média entre as matérias é ${highestAverage}`;
+  }
+};
+
+function getNewDisciplineData() {
+  const discipline = prompt('Qual a matéria deseja cadastrar?');
     const grades = [];
     let i = 0;
     while (i < 4) {
@@ -27,15 +70,8 @@ document.addEventListener('DOMContentLoaded', function () {
         alert('Por favor, informe um número válido entre 0 e 10.');
       }
     }
-
-    const average = calculateAverage(grades);
-    allAverages.push(average);
-    calculateAllAverages(allAverages);
-    addDisciplineRow(discipline, grades, average);
-    evaluateAverage(average);
-  });
-});
-
+    return { discipline, grades, average: getAverage(grades) };
+  }
 
 function fetchStudentData() {
   const form = document.getElementById('add_student_form');
