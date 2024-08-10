@@ -1,5 +1,25 @@
-export function calculateAverage(gradesArray) {
-  let sum = 0;
+export function initStudentGradeData() {
+  const studentGradesData = [
+  {
+    discipline: "Quimica",
+    grades: [8, 7, 9, 10],
+  }, 
+  {
+    discipline: "Matemática",
+    grades: [10, 9, 10, 10]
+  },
+  {
+    discipline: "Português",
+    grades: [6, 7, 8, 8]
+  },
+  ]
+
+  localStorage.setItem('studentGradesData', JSON.stringify(studentGradesData));
+} 
+
+
+export function getAverage(gradesArray) {
+  let sum = 0;  
   for (let i = 0; i < gradesArray.length; i++) {
     sum += gradesArray[i];
   }
@@ -24,9 +44,14 @@ export function addDisciplineRow(discipline, grades, average) {
                         <td>${grades[1].toFixed(1)}</td>
                         <td>${grades[2].toFixed(1)}</td>
                         <td>${grades[3].toFixed(1)}</td>
-                        <td>${average.toFixed(1)}</td>
+                        <td>${average}</td>
                       </tr>`;
   tbody.innerHTML += newRow;
+}
+
+export function cleanGradeTable() {
+  const tbody = document.getElementById('disciplines_table_body');
+  tbody.innerHTML = '';
 }
 
 export function findHighestAverageAmongSubjects(allAverages) {
@@ -39,10 +64,21 @@ export function findHighestAverageAmongSubjects(allAverages) {
   return highestAverage.toFixed(1);
 }
 
-export function calculateAllAverages(allAverages) {
-  const result = calculateAverage(allAverages);
-  document.querySelector('#general_average_result').textContent = `A média geral do aluno é ${result.toFixed(1)}`;
+export function loadStudentList() {
+  fetch('http://localhost:3000/alunos') // URL do servidor json-server
+    .then((response) => response.json())
+    .then((students) => {
+      const studentList = document.querySelector('#student_list');
+      studentList.innerHTML = ''; // Limpa a lista existente
 
-  const highestSubjectAverage = findHighestAverageAmongSubjects(allAverages);
-  document.getElementById('highest-average').textContent = `A maior média entre as matérias é ${highestSubjectAverage}`;
+      students.forEach((student) => {
+        const listItem = document.createElement('li');
+        listItem.id = "student_id_"+ student.id;
+        listItem.textContent = student.nome;
+        studentList.appendChild(listItem);
+      });
+    })
+    .catch((error) => {
+      console.error('Erro ao carregar a lista de alunos:', error);
+    });
 }
