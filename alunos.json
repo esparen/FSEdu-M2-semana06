@@ -1,0 +1,19 @@
+{
+  "alunos": [
+    {
+      "id" : 1,
+      "nome": "João da Silva",
+      "serie": "8ª série"
+    },
+    {
+      "id" : 2,
+      "nome": "Maria Oliveira",
+      "serie": "7ª série"
+    },
+    {
+      "id" : 3,
+      "nome": "Eduardo Santos",
+      "serie": "9ª série"
+    }
+  ]
+}

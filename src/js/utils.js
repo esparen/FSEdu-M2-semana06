@@ -63,3 +63,22 @@ export function findHighestAverageAmongSubjects(allAverages) {
   }
   return highestAverage.toFixed(1);
 }
+
+export function loadStudentList() {
+  fetch('http://localhost:3000/alunos') // URL do servidor json-server
+    .then((response) => response.json())
+    .then((students) => {
+      const studentList = document.querySelector('#student_list');
+      studentList.innerHTML = ''; // Limpa a lista existente
+
+      students.forEach((student) => {
+        const listItem = document.createElement('li');
+        listItem.id = "student_id_"+ student.id;
+        listItem.textContent = student.nome;
+        studentList.appendChild(listItem);
+      });
+    })
+    .catch((error) => {
+      console.error('Erro ao carregar a lista de alunos:', error);
+    });
+}
