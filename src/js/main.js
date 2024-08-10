@@ -3,7 +3,8 @@ import {
   evaluateAverage, 
   addDisciplineRow, 
   cleanGradeTable, 
-  initStudentGradeData 
+  initStudentGradeData,
+  loadStudentList
 } from './utils.js';
 
 
@@ -35,6 +36,7 @@ function loadPageData() {
   loadStudentData(); //carrega dados do aluno
   cleanGradeTable(); //limpa a tabela de disciplinas
   loadGradeData(); //carrega dados das disciplinas e notas
+  loadStudentList(); //carrega lista de alunos
 };
 
 function loadGradeData() {
